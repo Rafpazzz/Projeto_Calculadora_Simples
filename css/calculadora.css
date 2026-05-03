@@ -1,0 +1,75 @@
+html{
+    box-sizing: border-box;
+    height: 100%;
+}
+* ::before,
+* ::after{
+    box-sizing: inherit;
+    padding: 0;
+    margin: 0;
+}
+body{
+    align-items: center;
+    background: linear-gradient(90deg, rgba(46, 35, 35, 0.726) 0%, rgba(87, 50, 50, 0.726) 100%);
+    display: flex;
+    margin: auto;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.case{
+    border: 1px solid  #0e0d0d1f;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(30, 30, 30, 0.10);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    padding: 10px;
+    flex-basis: 400px;
+    height: 550px;
+    padding: 20px 30px;
+}    
+.btn-calc{
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(30, 30, 30, 0.1);
+    border-radius: 16px;   
+    box-shadow: 0 4px 15px rgba(30, 30, 30, 0.1);
+    color: black;
+    flex-basis: 20%;
+    font-family: inherit;
+    height: 65px;
+}
+.um{
+    flex-basis: 46%;    
+}
+.dois{
+    flex-basis: 46%;
+}
+.btn-calc:active{
+    background: rgba(255, 255, 255, 0.9);
+}
+.btn-fileira{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+    
+}
+.tela{
+    background: rgba(255, 255, 255, 0.747);
+    backdrop-filter: blur(5px);
+    border: 1px solid #0e0d0d1f;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(29, 28, 28, 0.123);
+    text-align: right;
+    font-size: 36px;
+    padding: 18px;
+    width: 360px;
+    overflow: auto;
+}
