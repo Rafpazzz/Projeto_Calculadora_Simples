@@ -25,12 +25,22 @@ function ehOperador(valor) {
     return /[÷×−+]/.test(valor);
 }
 
+function numeroValido(exp, valor) {
+    let partes = exp.split(/[÷×−+]/);
+    let ultimoNumero = partes[partes.length - 1];
+
+    let somenteNumeros = ultimoNumero.replace('.', '');
+
+    if (somenteNumeros.length >= 8 && !ehOperador(valor)) {
+        return false;
+    }
+
+    return true;
+}
+
 function salvarHistorico(conta, resultado) {
     historico.push(`${conta} = ${resultado}`);
-
-    if (historico.length > 5) {
-        historico.shift();
-    }
+    if (historico.length > 5) historico.shift();
 
     console.log("Histórico:");
     historico.forEach(item => console.log(item));
@@ -95,6 +105,10 @@ botoes.forEach(botao => {
             }
 
             if (expressao === "") return;
+        }
+
+        if (!numeroValido(expressao, valor)) {
+            return;
         }
 
         expressao += valor;
