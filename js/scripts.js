@@ -1,29 +1,8 @@
-
-/*
-function somar(numero1, numero2) {
-    return numero1 + numero2;
-}
-
-function subtrair(numero1, numero2) {
-    return numero1 - numero2;
-}
-
-function multiplicar(numero1, numero2) {
-    return numero1 * numero2;
-}
-
-function dividir(numero1, numero2) {
-    if (numero2 != 0)
-        return numero1 / numero2;
-    else
-        print("Não permitido divisão por zero.");
-}
-    */
-
 const tela = document.querySelector('.tela');
 const botoes = document.querySelectorAll('.btn-calc');
 
 let expressao = "";
+let historico = [];
 
 function atualizarTela() {
     tela.innerText = expressao || "0";
@@ -35,6 +14,26 @@ function converter(exp) {
         .replace(/×/g, '*')
         .replace(/−/g, '-')
         .replace(/\+/g, '+');
+}
+
+function formatarResultado(num) {
+    if (!isFinite(num)) return "Erro";
+    return Number(num.toFixed(8)).toString();
+}
+
+function ehOperador(valor) {
+    return /[÷×−+]/.test(valor);
+}
+
+function salvarHistorico(conta, resultado) {
+    historico.push(`${conta} = ${resultado}`);
+
+    if (historico.length > 5) {
+        historico.shift();
+    }
+
+    console.log("Histórico:");
+    historico.forEach(item => console.log(item));
 }
 
 botoes.forEach(botao => {
@@ -56,9 +55,29 @@ botoes.forEach(botao => {
 
         if (valor === "=") {
             try {
-                let resultado = Function("return " + converter(expressao))();
-                expressao = resultado.toString();
+                let conta = converter(expressao);
+
+                if (/\/0(?!\d)/.test(conta)) {
+                    tela.innerText = "Erro";
+                    expressao = "";
+                    return;
+                }
+
+                let resultado = Function("return " + conta)();
+
+                if (!isFinite(resultado)) {
+                    tela.innerText = "Erro";
+                    expressao = "";
+                    return;
+                }
+
+                let resultadoFormatado = formatarResultado(resultado);
+
+                salvarHistorico(expressao, resultadoFormatado);
+
+                expressao = resultadoFormatado;
                 atualizarTela();
+
             } catch {
                 tela.innerText = "Erro";
                 expressao = "";
@@ -66,8 +85,16 @@ botoes.forEach(botao => {
             return;
         }
 
-        if (expressao === "" && /[÷×−+]/.test(valor)) {
-            return;
+        if (ehOperador(valor)) {
+            let ultimo = expressao.slice(-1);
+
+            if (ehOperador(ultimo)) {
+                expressao = expressao.slice(0, -1) + valor;
+                atualizarTela();
+                return;
+            }
+
+            if (expressao === "") return;
         }
 
         expressao += valor;
